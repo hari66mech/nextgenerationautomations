@@ -21,13 +21,14 @@ def home(driver):
     driver.get(Constant.HOME_PAGE_URL)
 
 
-@when("I am scrolling down the page")
+@when("I am scrolling down the page", target_fixture="footer_texts")
 def clicking_slide(driver):
     driver.maximize_window()
     driver.execute_script(Footer_text.scroll_down)
-
+    footer_text = driver.find_element_by_xpath(Footer_text.footer_text_loc)
+    return footer_text
 
 @then("show the footer text")
-def results(driver):
-    footer_text = driver.find_element_by_xpath(Footer_text.footer_text_loc)
-    assert footer_text.text == Footer_text.footer_text
+def results(footer_texts):
+
+    assert footer_texts.text == Footer_text.footer_text
